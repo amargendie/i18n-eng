@@ -87,15 +87,18 @@ for (const f of [
     process.exit(1);
   }
 }
+if (dry) {
+  console.log(`[dry-run] Would install skill to ${dest}`);
+  if (existsSync(dest) && !force) {
+    console.log('Note: destination already exists; a real install would require --force.');
+  }
+  reportLegacy(legacyDest);
+  process.exit(0);
+}
 if (existsSync(dest) && !force) {
   console.error(`Already exists: ${dest}\nPass --force to replace.`);
   reportLegacy(legacyDest);
   process.exit(1);
-}
-if (dry) {
-  console.log(`[dry-run] Would install skill to ${dest}`);
-  reportLegacy(legacyDest);
-  process.exit(0);
 }
 mkdirSync(dirname(dest), { recursive: true });
 const staging = mkdtempSync(join(dirname(dest), '.i18n-skill-'));
