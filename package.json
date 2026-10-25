@@ -1,25 +1,38 @@
 {
   "name": "i18n-eng",
   "version": "0.3.0",
-  "private": true,
-  "type": "module",
   "description": "Agent Skill for i18n architecture, audit, migration and maintenance",
+  "type": "module",
   "license": "Apache-2.0",
+  "author": "Andres Margendie Benoit",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "localization",
+    "agent-skills",
+    "cursor",
+    "formatjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amargendie/i18n-eng.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amargendie/i18n-eng/issues"
+  },
+  "homepage": "https://github.com/amargendie/i18n-eng#readme",
   "bin": {
     "i18n-eng": "./bin/install.mjs"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "eval:structural": "node bin/eval.mjs validate",
-    "install:skill": "node bin/install.mjs"
+    "install:skill": "node bin/install.mjs install"
   },
   "files": [
     "SKILL.md",
     "references",
     "bin/install.mjs",
-    "bin/eval.mjs",
-    "lib",
-    "docs",
     "README.md",
     "LICENSE",
     "NOTICE",

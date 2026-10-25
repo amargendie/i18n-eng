@@ -11,7 +11,8 @@ An [Agent Skill](https://agentskills.io/) that helps coding agents **design, aud
 | **Invoke** | `/i18n-eng` (explicit) or contextual discovery from the skill description |
 | **Version** | **v0.3.0** (experimental initial public release) |
 | **License** | [Apache-2.0](LICENSE) |
-| **Distribution** | GitHub clone + local installer (**not** published to npm) |
+| **Intended install** | `npx i18n-eng install` (after npm publication) |
+| **Available now** | Git clone + local installer (see below) |
 
 ## What it does
 
@@ -40,127 +41,111 @@ Compatible agents typically load skill **name + description** at startup and may
 ## Prerequisites
 
 - **Node.js 24 LTS or newer** (`package.json` `engines.node: ">=24"`)
-- Git clone of this repository
 - No third-party npm runtime dependencies for install or tests
 
-## Install (from a Git clone)
+## Install
 
-This package is marked `"private": true`. **Do not** expect `npm install -g i18n-eng` or a public npm package. Install the Cursor payload from a clone:
+### Intended method (after the package is published to npm)
+
+```bash
+npx i18n-eng install                 # project-local: .cursor/skills/i18n-eng/
+npx i18n-eng install --global        # ~/.cursor/skills/i18n-eng/
+npx i18n-eng@0.3.0 install           # pin this release
+npx i18n-eng install --dry-run
+npx i18n-eng install --force         # replace existing i18n-eng only
+npx i18n-eng install --agent agents  # supported path; runtime not certified
+i18n-eng --help
+```
+
+Until publication completes, `npx i18n-eng` may fail with a registry 404. Use the Git clone method below in the meantime.
+
+### Currently available: Git clone
 
 ```bash
 git clone https://github.com/amargendie/i18n-eng.git
 cd i18n-eng
-
-# Project-local: <cwd>/.cursor/skills/i18n-eng/
 node bin/install.mjs install
-
-# Global Cursor skills: ~/.cursor/skills/i18n-eng/
 node bin/install.mjs install --global
-
-# Preview destination without writing
 node bin/install.mjs install --dry-run
-
-# Replace an existing i18n-eng install only
 node bin/install.mjs install --force
-# (add --global if updating the home-directory install)
-
-# Optional alternate skills root (supported, not runtime-certified)
-node bin/install.mjs install --agent agents
 ```
 
-Equivalent: `npm run install:skill` runs `node bin/install.mjs` (same defaults as calling the installer with no extra flags—writes under the **current working directory** unless you pass `--global`).
+The installer copies **only** `SKILL.md` and `references/` into the skills directory. It does **not** install the Evaluation Harness, fixtures, tests, or `eval-runs/`. The folder name always matches frontmatter `name: i18n-eng`.
 
-The installer copies **only** `SKILL.md` and `references/`. It does **not** install the Evaluation Harness, fixtures, tests, or `eval-runs/`. The folder name always matches frontmatter `name: i18n-eng`.
+The npm package (when published) ships the skill payload plus the installer and public docs. The Evaluation Harness remains in the **GitHub repository** for contributors (`npm test`, `npm run eval:structural`).
 
 ### Update
 
-Pulling or updating a Git clone of this repository **does not** refresh existing skill installations under `.cursor/skills/` or `~/.cursor/skills/`. Re-run the installer with `--force` after you want the installed payload to match the clone:
+Updating a Git clone or reinstalling a newer npm package **does not** refresh an existing skill folder by itself. Re-run install with `--force`:
 
 ```bash
-# From the updated clone — project-local install
+npx i18n-eng@0.3.0 install --force
+# or from a clone:
 node bin/install.mjs install --force
-
-# Global Cursor install
 node bin/install.mjs install --global --force
 ```
 
 ### Uninstall
 
-Remove the skill directory manually (the installer does not delete skills):
-
 ```bash
-rm -rf .cursor/skills/i18n-eng          # project-local
-rm -rf ~/.cursor/skills/i18n-eng        # global Cursor
+rm -rf .cursor/skills/i18n-eng
+rm -rf ~/.cursor/skills/i18n-eng
 ```
 
 Do not delete unrelated skills.
 
 ### Legacy name (`internationalization-engineering`)
 
-If `.cursor/skills/internationalization-engineering/` (or `.agents/…`) still exists, the installer **reports** it and **does not** modify it.
-
-1. Install `i18n-eng` as above.  
-2. Confirm `/i18n-eng` loads the new folder and frontmatter `name: i18n-eng`.  
-3. Manually remove the legacy folder when ready.  
-
-Existence of `i18n-eng` alone does not complete migration while the legacy folder remains.
+If `.cursor/skills/internationalization-engineering/` (or `.agents/…`) still exists, the installer **reports** it and **does not** modify it. Install `i18n-eng`, verify `/i18n-eng`, then remove the legacy folder manually.
 
 ## Repository structure
 
 ```text
 SKILL.md                 Skill entrypoint (installed)
 references/              Workflow docs (installed)
-assets/                  Optional templates (not installed)
-bin/install.mjs          Skill installer
-bin/eval.mjs             Evaluation Harness CLI
-lib/eval/                Harness implementation
-docs/                    Harness design + synthetic examples
-tests/                   Unit/structural tests, G3 cases, fixtures
-CHANGELOG.md             Release notes
-LICENSE / NOTICE         Apache-2.0
+bin/install.mjs          Skill installer (npm bin: i18n-eng)
+bin/eval.mjs             Evaluation Harness CLI (GitHub / local clone)
+lib/eval/                Harness implementation (not in npm pack)
+docs/                    Harness design + examples (not in npm pack)
+tests/                   Tests and fixtures (not in npm pack)
+assets/                  Optional templates (not installed; not in npm pack)
+CHANGELOG.md LICENSE NOTICE
 ```
 
 ## Development and validation
 
 ```bash
-npm test                 # native node:test suite
-npm run eval:structural  # read-only structural validate (G2 + G3 packaging)
+git clone https://github.com/amargendie/i18n-eng.git
+cd i18n-eng
+npm test
+npm run eval:structural
 ```
 
 Requires Node.js **24+**. There are no third-party test frameworks.
 
 ## Evaluation Harness
 
-Offline tooling for contributors and evaluators. Documented in [`docs/evaluation-harness.md`](docs/evaluation-harness.md).
+Offline tooling for contributors and evaluators (clone the repository). Documented in [`docs/evaluation-harness.md`](docs/evaluation-harness.md).
 
-**Capabilities:** schema validation, structural package checks, synthetic G3 cases (`GF-001`, `AU-001`, `MI-001`, `MA-001`, `NEG-001`), import of operator-prepared evidence bundles, SHA-256 integrity, deterministic outcome aggregation, `record` / `report` CLI.
+**Capabilities:** schema validation, structural package checks, synthetic G3 cases, evidence `record` / `report`, SHA-256 integrity, deterministic aggregation.
 
-**Limitations:** the harness **does not** run coding agents, call LLMs, scrape private repos, or prove authenticity of claimed tool traces. Hashes prove **stored-byte integrity** after import. Historical notes in [`tests/workflow-evals.md`](tests/workflow-evals.md) are human protocol—not machine-certified pass rates.
+**Limitations:** the harness **does not** run coding agents, call LLMs, scrape private repos, or prove authenticity of claimed tool traces. Historical notes in [`tests/workflow-evals.md`](tests/workflow-evals.md) are human protocol—not machine-certified pass rates.
 
 ```bash
-# 1) Structural validation (read-only)
 node bin/eval.mjs validate
-
-# 2) Import a prepared bundle (does not launch agents)
 node bin/eval.mjs record --case NEG-001 --input docs/examples/execution-bundle
-
-# 3) Report the recorded run id from the bundle (after record succeeds)
 node bin/eval.mjs report --run example-neg-001-2026-10-24
-node bin/eval.mjs report --run example-neg-001-2026-10-24 --json
 ```
-
-The synthetic example under `docs/examples/execution-bundle/` is **illustrative**. A machine `PASS` from that example is **not** an independently verified agent execution. Keep real `INCONCLUSIVE` recordings as inconclusive.
 
 Imported runs live under gitignored `eval-runs/`.
 
 ## Known limitations and non-goals
 
-- Experimental **v0.3.0**; workflow intent stable vs prior 0.2.x guidance, harness is G2–G4.
+- Experimental **v0.3.0**; workflow intent stable vs prior 0.2.x guidance; harness is G2–G4 in-repo.
 - Not a guarantee of correct automatic skill activation in every agent product.
 - Not an endorsement of any single i18n library or framework.
 - Not authorization to change product locales, routes, or APIs.
-- npm publication is **out of scope**; use Git clone + installer.
-- Optional `assets/i18n-policy.template.md` is for humans copying into projects—not shipped by the installer.
+- Optional `assets/i18n-policy.template.md` is for humans copying into projects—not shipped by the installer or npm pack.
 
 ## Versioning, changelog, and license
 
