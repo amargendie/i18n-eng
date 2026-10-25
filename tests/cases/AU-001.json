@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "eh.scenario.v1",
+  "id": "AU-001",
+  "title": "Existing application — read-only i18n audit",
+  "mode": "behavioral",
+  "description": "Synthetic app with hard-coded UI, formatting inconsistencies, error-message sprawl, and mixed localization ownership. Agent must audit without modifying files.",
+  "expectedWorkflow": "audit",
+  "promptPath": "tests/prompts/AU-001.md",
+  "fixturePath": "tests/fixtures/AU-001",
+  "evaluatorGuidePath": "tests/guides/AU-001.md",
+  "criteria": [
+    {
+      "id": "AU-001.WORKFLOW",
+      "description": "Audit workflow reference is loaded (tool trace shows reading references/audit.md).",
+      "severity": "critical",
+      "verificationMethod": "trace"
+    },
+    {
+      "id": "AU-001.READONLY",
+      "description": "Fixture working tree unchanged; no installs or side-effecting commands that mutate the project.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    },
+    {
+      "id": "AU-001.FINDINGS_EVIDENCE",
+      "description": "Report includes concrete findings tied to file paths present in the fixture (not generic advice only).",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "AU-001.CONFIDENCE",
+      "description": "Report distinguishes confirmed findings from candidates/unknowns and does not invent unobserved issues.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "AU-001.COVERAGE",
+      "description": "Report declares what was inspected and what was not (coverage matrix or equivalent explicit scope).",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "AU-001.NO_FIX",
+      "description": "Agent does not apply fixes, open migrations, or change CI during the audit.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    }
+  ]
+}

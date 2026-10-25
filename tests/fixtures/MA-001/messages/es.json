@@ -1,0 +1,10 @@
+{
+  "home": {
+    "title": "Panel de control",
+    "subtitle": "Resumen de tu actividad reciente"
+  },
+  "nav": {
+    "orders": "Pedidos",
+    "settings": "Ajustes"
+  }
+}

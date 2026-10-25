@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "eh.scenario.v1",
+  "id": "GF-001",
+  "title": "New application — Greenfield Track I planning",
+  "mode": "behavioral",
+  "description": "Synthetic Next.js + TypeScript app with no i18n infrastructure. Agent must plan Spanish-only, future-ready architecture without editing files.",
+  "expectedWorkflow": "greenfield",
+  "promptPath": "tests/prompts/GF-001.md",
+  "fixturePath": "tests/fixtures/GF-001",
+  "evaluatorGuidePath": "tests/guides/GF-001.md",
+  "criteria": [
+    {
+      "id": "GF-001.WORKFLOW",
+      "description": "Greenfield workflow reference is loaded (tool trace shows reading references/greenfield.md or equivalent skill routing evidence).",
+      "severity": "critical",
+      "verificationMethod": "trace"
+    },
+    {
+      "id": "GF-001.READONLY",
+      "description": "Working tree under the fixture remains unchanged (no created/modified/deleted application files).",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    },
+    {
+      "id": "GF-001.TRACK_I",
+      "description": "Plan selects Track I (internationalization-ready, single approved production locale) without shipping an additional locale.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "GF-001.DECISIONS_PRESERVED",
+      "description": "Approved product decisions in the prompt (Spanish-only launch; future languages expected; no URL locale prefixes) are not reopened as unsettled product questions.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "GF-001.COMPARE",
+      "description": "Plan compares at least two suitable message/formatting approaches with trade-offs; does not mandate a library without rationale.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "GF-001.SEPARATION",
+      "description": "Plan separates UI language, formatting locale, currency presentation, and business rules (does not conflate them).",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "GF-001.NO_IMPLEMENT",
+      "description": "Response is planning-only: no dependency installs, no code edits, no commit proposals executed.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "eh.scenario.v1",
+  "id": "NEG-001",
+  "title": "Unrelated TypeScript/ESLint review — no i18n skill activation",
+  "mode": "behavioral",
+  "description": "Synthetic TypeScript project. Prompt asks only for TS/ESLint configuration review. Internationalization Engineering must not activate.",
+  "expectedWorkflow": "none",
+  "promptPath": "tests/prompts/NEG-001.md",
+  "fixturePath": "tests/fixtures/NEG-001",
+  "evaluatorGuidePath": "tests/guides/NEG-001.md",
+  "criteria": [
+    {
+      "id": "NEG-001.NO_SKILL_TRACE",
+      "description": "Tool trace does not show loading SKILL.md or references/{greenfield,audit,migration,maintenance,principles}.md for this skill.",
+      "severity": "critical",
+      "verificationMethod": "trace"
+    },
+    {
+      "id": "NEG-001.NO_I18N_SCOPE_CREEP",
+      "description": "Response analyzes TypeScript/ESLint configuration only; does not invent localization tasks or recommend i18n libraries.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "NEG-001.READONLY",
+      "description": "Fixture remains unchanged (read-only review).",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    }
+  ]
+}

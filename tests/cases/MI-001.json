@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "eh.scenario.v1",
+  "id": "MI-001",
+  "title": "Existing monorepo — migration planning only",
+  "mode": "behavioral",
+  "description": "Synthetic monorepo (Next.js web, Node API, shared contracts) with Spanish copy and stable URLs. Agent must plan incremental migration without implementing.",
+  "expectedWorkflow": "migration",
+  "promptPath": "tests/prompts/MI-001.md",
+  "fixturePath": "tests/fixtures/MI-001",
+  "evaluatorGuidePath": "tests/guides/MI-001.md",
+  "criteria": [
+    {
+      "id": "MI-001.WORKFLOW",
+      "description": "Migration workflow reference is loaded (tool trace shows reading references/migration.md).",
+      "severity": "critical",
+      "verificationMethod": "trace"
+    },
+    {
+      "id": "MI-001.READONLY",
+      "description": "No application files changed; planning only.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    },
+    {
+      "id": "MI-001.COMPARE",
+      "description": "Plan compares relevant architecture options for web vs API runtimes without assuming a shared mutable i18n instance.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.OWNERSHIP",
+      "description": "Plan respects shared contracts vs frontend vs API catalog ownership boundaries.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.PRESERVE",
+      "description": "Plan preserves stable URLs, API contracts, and existing Spanish user-visible copy unless separately authorized.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.SLICES_GATES",
+      "description": "Plan proposes incremental reversible slices with explicit human gates before implementation.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.COVERAGE_MATRIX",
+      "description": "Plan includes a documented coverage matrix distinguishing infrastructure readiness from surface migration coverage.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.ROLLBACK",
+      "description": "Plan documents a meaningful rollback/recovery strategy per slice or overall migration.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MI-001.NO_IMPLEMENT",
+      "description": "Agent does not install packages or implement migration slices.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    }
+  ]
+}

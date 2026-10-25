@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "eh.bundle.v1",
+  "runId": "example-neg-001-2026-10-24",
+  "caseId": "NEG-001",
+  "skillVersion": "0.3.0",
+  "agent": {
+    "product": "cursor",
+    "model": "unknown"
+  },
+  "executedAt": "2026-10-24T12:00:00Z",
+  "fixtureRevision": "synth-neg-001@fixture",
+  "notes": "Synthetic example only — not a real evaluation result.",
+  "limitations": [
+    "Operators must sanitize traces before ingestion.",
+    "This example is illustrative and must not be treated as a PASS."
+  ],
+  "results": [
+    {
+      "criterionId": "NEG-001.NO_SKILL_TRACE",
+      "status": "pass",
+      "evidence": [
+        { "kind": "tool_trace", "path": "evidence/tool_trace.json" }
+      ]
+    },
+    {
+      "criterionId": "NEG-001.NO_I18N_SCOPE_CREEP",
+      "status": "pass",
+      "evidence": [
+        { "kind": "human_attestation", "path": "evidence/human_attestation.md" }
+      ]
+    },
+    {
+      "criterionId": "NEG-001.READONLY",
+      "status": "pass",
+      "evidence": [
+        { "kind": "git_diff", "path": "evidence/git_diff.txt" }
+      ]
+    }
+  ]
+}

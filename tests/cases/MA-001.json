@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "eh.scenario.v1",
+  "id": "MA-001",
+  "title": "Established i18n — maintenance planning for small UI enhancement",
+  "mode": "behavioral",
+  "description": "Synthetic app with sound next-intl-style Spanish catalog. Agent must plan a small enhancement using existing conventions and stop for approval before edits.",
+  "expectedWorkflow": "maintenance",
+  "promptPath": "tests/prompts/MA-001.md",
+  "fixturePath": "tests/fixtures/MA-001",
+  "evaluatorGuidePath": "tests/guides/MA-001.md",
+  "criteria": [
+    {
+      "id": "MA-001.WORKFLOW",
+      "description": "Maintenance workflow reference is loaded (tool trace shows reading references/maintenance.md).",
+      "severity": "critical",
+      "verificationMethod": "trace"
+    },
+    {
+      "id": "MA-001.READONLY_PLAN",
+      "description": "During planning phase, fixture files are not modified.",
+      "severity": "critical",
+      "verificationMethod": "git_diff"
+    },
+    {
+      "id": "MA-001.PRESERVE_STACK",
+      "description": "Plan reuses the established message engine and catalog conventions; does not propose unjustified library replacement.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MA-001.MESSAGE_KEYS",
+      "description": "Plan introduces new message keys (catalog entries) rather than hard-coded user-visible JSX strings for the enhancement.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MA-001.SCOPE",
+      "description": "Plan stays scoped to the requested enhancement; does not expand into a repository-wide audit or migration.",
+      "severity": "major",
+      "verificationMethod": "human_review"
+    },
+    {
+      "id": "MA-001.APPROVAL_GATE",
+      "description": "Agent requests explicit approval before editing files.",
+      "severity": "critical",
+      "verificationMethod": "human_review"
+    }
+  ]
+}

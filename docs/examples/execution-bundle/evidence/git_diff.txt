@@ -1,0 +1,1 @@
+# Synthetic placeholder for an independently captured git status/diff of the fixture sandbox.

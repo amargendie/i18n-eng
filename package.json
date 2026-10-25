@@ -1,0 +1,31 @@
+{
+  "name": "i18n-eng",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent Skill for i18n architecture, audit, migration and maintenance",
+  "license": "Apache-2.0",
+  "bin": {
+    "i18n-eng": "./bin/install.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "eval:structural": "node bin/eval.mjs validate",
+    "install:skill": "node bin/install.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "references",
+    "bin/install.mjs",
+    "bin/eval.mjs",
+    "lib",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=24"
+  }
+}
